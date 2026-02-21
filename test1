@@ -1,0 +1,205 @@
+from abc import ABC, abstractmethod
+import random
+import sys
+
+class Hero:
+    def __init__(self, health, damage, coins):
+        self.__health = health
+        self.__damage = damage
+        self.__coins = coins
+
+    def earn_coins(self, value0):
+        self.__coins += value0
+
+    def recover(self, value1):
+        self.__health += value1
+
+    def bruise(self, value2):
+        self.__health -= value2
+
+    def attack(self):
+        pass
+
+class Tank(Hero):
+    def __init__(self, health, damage, coins, anger, energy):
+        super().__init__(health, damage, coins)
+        self.__health = health * 1.5
+        self.__anger = anger
+        self.__energy = energy
+        self.__coins = coins
+
+    def bruise(self, value2):
+        print('you supported the damage of the attack!')
+        self.__health -= value2
+
+    def attack(self, damage_attack):
+        if self.__energy < 20:
+            print('you can´t attack!, your energy is so low!')
+
+        if self.__anger >= 100:
+            print('you are with triplicate damage for a moment!')
+            health_of_enemie -= damage_attack * 3
+            self.__anger -= 40
+            self.__energy -= 25
+        else:
+            self.__health_of_enemie -= damage_attack
+            self.__anger += 20
+            self.__energy -= 20
+
+    def rest(self):
+        print('you rested!')
+        self.__energy = 100
+
+class Sorcerer(Hero):
+    def __init__(self, health, damage, magic_energy, coins, anger):
+        super().__init__(health, damage, coins)
+        self.__anger = anger
+        self.__magic_energy = magic_energy
+
+    def spell1(self):
+        if self.__magic_energy < 40:
+            print('you can´t cast spell!')
+        if self.__anger >= 100:
+            print('your damage is bigger now!')
+            self.__health_of_enemie -= 40
+            self.__anger -= 30
+            self.__magic_energy -= 60
+        else:
+            print('you do a fireball!, it burn the enemies!')
+            self.__health_of_enemie -= 25
+            self.__magic_energy -= 40
+            self.__anger += 15
+
+    def spell2(self):
+        if self.__magic_energy < 50:
+            print('you can´t cast spell, your energy is so low!')
+        if self.__anger >= 100:
+            print('your damage is bigger now!')
+            self.__health_of_enemie -= 55
+            self.__anger -= 30
+            self.__magic_energy -= 70
+        else:
+            print('you throw a thunder in your enemies!')
+            self.__health_of_enemie -= 35
+            self.__anger += 20
+            self.__magic_energy -= 50
+
+    def spell3(self):
+        if self.__magic_energy > 100:
+            print('you can´t cast spell!')
+        else:
+            print('you made a small beam of light, it hurts too much your enemies!')
+            self.__health_of_enemie -= 100
+            self.__magic_energy -= 110
+
+    
+
+    def rest(self):
+        print('you rested!')
+        self.__magic_energy = 200
+
+class Lucky(Hero):
+    def __init__(self, health, damage, coins):
+        super().__init__(health, damage, coins)
+        self.__coins = coins
+
+    def earn_coins(self, value0):
+        self.__coins += (value0 * 2)
+
+    def sword(self, value1):
+        if self.__anger >= 100:
+            print('now your damage is bigger, attack with your sword!')
+            self.__health_of_enemie -= value1 * 2
+            self.__anger -= 40
+        else:
+            self.__health_of_enemie -= value1
+            self.__anger += 20
+
+
+    
+
+
+
+adrian = Hero(100, 10, 0)
+
+print('RPG!')
+print('-' * 30)
+print("History: in a far land called mynus, that wasn´t discovered by the 'modern world', the people live in a chaos, the monsters and thiefs are in all the parts of the island,")
+print("a boy called adrian is tired of this, he decided to resolve this with your hands, beating the eye of crow, the 'boss' of the monsters in the island.")
+print('' * 240)
+
+while True:
+    menu = input('hello!, this is a code of a rpg!, choose what do you want(play/leave): ').lower()
+    if menu == 'leave':
+        sys.exit()
+    elif menu != 'leave' and menu != 'play':
+        print('this game doen´t have this option!')
+        print('*' * 30)
+        continue
+    else:
+        break
+
+while True:
+    if menu == 'play':
+        print('you wake up in a house, you are hungry...')
+        print('' * 120)
+
+        oportunity1 = input('you go buy food, but in the path you see a old lady be stolen by a thief, what do you do?(stop him/nothing): ').lower()
+        if oportunity1 == 'stop him':
+            print('you stop him!, but he attacks you and now you are bruised!')
+            adrian.bruise(15)
+            print('thank you for recover my bag! take these coins as reward.')
+            print('you earned 10 coins!')
+            adrian.earn_coins(10)
+            break
+
+        elif oportunity1 == 'nothing':
+            print('you see the old lady being stolen but you don´t do nothing...')
+            break
+        else:
+            print('you can´t do this!')
+            continue
+
+while True:
+    print(' ' * 30)
+    print('you see an strong man sitted, he looks to you and he tells you to get closer to him')
+    print("'seems like that you aren´t enjoying this life, do you want change?, i think that the answer is yes' he speak, your stomach rumble, 'oh, and eat this bread'")
+    print(' ' * 30)
+    print('i have some classes that you will like, choose one.')
+
+    print('-' * 30)
+    print('tank- health 50% bigger')
+    print('sorcerer- can cast spell, but can´t use weapon or attack without spell')
+    print('lucky- earn 2x coins and receive a simple sword')
+    print('-' * 30)
+
+    answer = input('what do you want?: ').lower()
+    if answer == 'tank':
+        adrian = Tank(100, 10, 10, 0, 100)
+        break
+    elif answer == 'sorcerer':
+        adrian = Sorcerer(100, 0, 200, 10, 0)
+        break
+    elif answer == 'lucky':
+        adrian = Lucky(100, 10, 10)
+        break
+    else:
+        print('this class doesn´t exist')
+        continue
+
+
+print('ok, now let me explicate the basic: ')
+print('-' * 30)
+
+print('if your´re a sorcerer so you can cast 3 spells and rest to recover the magic energy.')
+print('if you´re a lucky so you can attack with your sword and recover to recover your energy')
+print('if you´re a tank so you can attack and your defense is incredible!')
+
+print('-' * 30)
+print(' ' * 30)
+
+print('now go train, oh, and with the coins that you earn when you defeat enemies you can buy new weapons.')
+print(' ' * 30)
+print('adrian goes train to get coins and get stronger')
+print(' ' * 30)
+print('-' * 40, 'COMBAT', '-' * 40)
